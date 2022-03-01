@@ -1,6 +1,6 @@
 #Importing the FastApi class
 from fastapi import FastAPI
-
+from fastapi.responses import JSONResponse
 # Creating an app object
 app = FastAPI()
 
@@ -15,16 +15,14 @@ async def root() -> dict:
 # GET -- > Read Todo 
 @app.get("/todo", tags=['Todos'])
 async def get_todos() -> dict:
-    return {"Data": todos}
+    return JSONResponse(status_code=200, content={"Data": todos})
 
 
 # Post -- > Create Todo
 @app.post("/todo", tags=["Todos"])
 async def add_todo(todo: dict) -> dict:
     todos.append(todo)
-    return {
-        "data": "A Todo is Added!"
-    }
+    return JSONResponse(status_code=201, content={"data": "A Todo is Added in Todos!"})
 
 
 # PUT  -- > Update Todo
@@ -39,7 +37,6 @@ async def update_todo(id: int, body: dict) -> dict:
     return {
         "data": f"This Todo with id {id} is not found!"
     }
-
 
 # DELETE --> Delete Todo 
 @app.delete("/todo/{id}", tags=["Todos"])
