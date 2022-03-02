@@ -1,5 +1,5 @@
 #Importing the FastApi class
-from fastapi import FastAPI
+from fastapi import FastAPI, Response, status
 from fastapi.responses import JSONResponse
 # Creating an app object
 app = FastAPI()
@@ -26,17 +26,17 @@ async def add_todo(todo: dict) -> dict:
 
 
 # PUT  -- > Update Todo
-@app.put("/todo/{id}", tags=["Todos"])
-async def update_todo(id: int, body: dict) -> dict:
+@app.put("/todo/{id}",status_code=200, tags=["Todos"])
+async def update_todo(id: int, body: dict, response: Response) -> dict:
     for todo in todos:
         if (int(todo["id"])) == id:
             todo["Activity"] = body["Activity"]
             return {
                 "data": f"Todo with id {id} has been updated"
             }
-    return {
-        "data": f"This Todo with id {id} is not found!"
-    }
+        else:
+            response.status_code = status.HTTP_201_CREATED
+            return {"data": f"The Todo with id {id} is not found!"}
 
 # DELETE --> Delete Todo 
 @app.delete("/todo/{id}", tags=["Todos"])
