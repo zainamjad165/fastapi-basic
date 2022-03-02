@@ -14,8 +14,9 @@ async def root() -> dict:
 
 # GET -- > Read Todo 
 @app.get("/todo", tags=['Todos'])
-async def get_todos() -> dict:
-    return JSONResponse(status_code=200, content={"Data": todos})
+async def get_todos(response: Response):
+    response.headers["hello"] = "here are your todos."
+    return {"Data": todos}
 
 
 # Post -- > Create Todo
