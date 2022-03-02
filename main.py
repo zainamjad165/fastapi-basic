@@ -2,9 +2,39 @@
 from fastapi import FastAPI, Response, status
 from fastapi.responses import JSONResponse
 
+description = """
+MyApp API helps you to manage your works which are to be done.
+
+## Works
+
+You can see your **Todos**.
+
+## Locations
+
+You can manage works:
+
+* **At Home** .
+* **At Office** .
+"""
+
+
 # Creating an app object
-homeapp = FastAPI()
-officeapp = FastAPI()
+homeapp = FastAPI( title="MyApp",
+    description=description,
+    version="0.0.1",
+    terms_of_service="http://myapp.com/terms/",
+    contact={
+        "name": "Zain Amjad Basra",
+        "email": "zainamjadbasra@gmail.com",
+    },)
+officeapp = FastAPI( title="MyApp",
+    description=description,
+    version="0.0.1",
+    terms_of_service="http://myapp.com/terms/",
+    contact={
+        "name": "Zain Amjad Basra",
+        "email": "zainamjadbasra@gmail.com",
+    },)
 
 
 # A minimal app to demonstrate the get request 
